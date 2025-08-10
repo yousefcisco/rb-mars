@@ -40,6 +40,7 @@ for (let i = 1; i < lines.length; i += 3) {
 }
 
 console.log(`Grid size: ${gridMaxX} ${gridMaxY}`);
+console.log(`Initial robot positions:`);
 robots.forEach((robot) =>
   console.log(
     `Robot at (${robot.x}, ${robot.y}) facing ${robot.orientation} is ${robot.isLost ? 'lost' : 'not lost'}`,
@@ -80,3 +81,11 @@ robots.forEach((robot) => {
     }
   });
 });
+
+console.log('');
+console.log(`Final robot positions:`);
+robots.forEach((robot) =>
+  console.log(
+    `Robot at (${robot.x}, ${robot.y}) facing ${robot.orientation} is ${robot.isLost ? 'lost' : 'not lost'}`,
+  ),
+);
