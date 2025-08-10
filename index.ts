@@ -1,17 +1,9 @@
 import { Instruction, Orientation, Robot } from './types';
 import { goForward, isWithinBounds, turnLeft, turnRight } from './utils';
 
-// Sample input
-const input = `
-5 3
-1 1 E
-RFRFRFRF
+import fs from 'fs';
 
-3 2 N
-FRRFLLFFRRFLL
-
-0 3 W
-LLFFFLFLFL`;
+const input = fs.readFileSync(`./input.txt`, 'utf-8');
 
 // Globals
 const robots: Robot[] = [];
