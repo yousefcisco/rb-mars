@@ -15,7 +15,6 @@ const lines = input.trim().split('\n');
 const [gridMaxX, gridMaxY] = lines[0].split(' ').map(Number);
 
 // Process 3 lines at a time for each robot, starting at line 1
-// @todo add input validation
 for (let i = 1; i < lines.length; i += 3) {
   const positionLine = lines[i].trim();
   const instructionsLine = lines[i + 1]?.trim() || '';
@@ -73,6 +72,8 @@ robots.forEach((robot) => {
           }
         }
         break;
+      default:
+        console.error(`Unknown instruction: ${instr}, ignoring.`);
     }
   });
 });
