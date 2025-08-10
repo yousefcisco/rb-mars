@@ -78,24 +78,24 @@ robots.forEach((robot, index) => {
         // Move forward
         const [newX, newY] = goForward(robot.x, robot.y, robot.orientation);
 
-        // If there's a scent, ignore instructions
-        if (scents.has(`${newX},${newY}`)) {
-          console.log(
-            `Scent detected at (${newX}, ${newY}), ignoring instruction`,
-          );
-          break;
-        }
-
         if (isWithinBounds(newX, newY, gridMaxX, gridMaxY)) {
           console.log(`Moving robot to (${newX}, ${newY})`);
           // If robot is within bounds, move forward
           robot.x = newX;
           robot.y = newY;
         } else {
-          // If robot is out of bounds, mark its position with a scent & isLost=true
-          console.log(`Robot at (${robot.x}, ${robot.y}) is lost!`);
-          scents.add(`${robot.x},${robot.y}`);
-          robot.isLost = true;
+          // If there's a scent, ignore instructions
+          if (scents.has(`${robot.x},${robot.y}`)) {
+            console.log(
+              `Scent detected at (${robot.x}, ${robot.y}), ignoring instruction`,
+            );
+            break;
+          } else {
+            // If robot is out of bounds, mark its position with a scent & isLost=true
+            console.log(`Robot at (${robot.x}, ${robot.y}) is lost!`);
+            scents.add(`${robot.x},${robot.y}`);
+            robot.isLost = true;
+          }
         }
         break;
     }
