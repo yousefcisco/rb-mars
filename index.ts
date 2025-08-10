@@ -1,3 +1,6 @@
+import { Instruction, Orientation, Robot } from './types';
+import { goForward, isWithinBounds, turnLeft, turnRight } from './utils';
+
 // Sample input
 const input = `
 5 3
@@ -10,18 +13,6 @@ FRRFLLFFRRFLL
 0 3 W
 LLFFFLFLFL`;
 
-// Type definitions
-type Orientation = 'N' | 'S' | 'E' | 'W';
-type Instruction = 'L' | 'R' | 'F';
-
-type Robot = {
-  x: number;
-  y: number;
-  orientation: Orientation;
-  instruction: Instruction[];
-  isLost: boolean;
-};
-
 // Globals
 const robots: Robot[] = [];
 
@@ -31,6 +22,7 @@ const lines = input.trim().split('\n');
 const [gridMaxX, gridMaxY] = lines[0].split(' ').map(Number);
 
 // Process 3 lines at a time for each robot, starting at line 1
+// @todo add input validation
 for (let i = 1; i < lines.length; i += 3) {
   const positionLine = lines[i].trim();
   const instructionsLine = lines[i + 1]?.trim() || '';
@@ -52,3 +44,29 @@ robots.forEach((robot) =>
     `Robot at (${robot.x}, ${robot.y}) facing ${robot.orientation} is ${robot.isLost ? 'lost' : 'not lost'}`,
   ),
 );
+
+robots.forEach((robot) => {
+  robot.instruction.forEach((instr) => {
+    // Process each instruction
+    switch (instr) {
+      case 'L':
+        // Turn left
+        robot.orientation = turnLeft(robot.orientation);
+        break;
+      case 'R':
+        // Turn right
+        robot.orientation = turnRight(robot.orientation);
+        break;
+      case 'F':
+        // Move forward
+        const [newX, newY] = goForward(robot.x, robot.y, robot.orientation);
+        if (isWithinBounds(newX, newY, gridMaxX, gridMaxY)) {
+          robot.x = newX;
+          robot.y = newY;
+        } else {
+          robot.isLost = true;
+        }
+        break;
+    }
+  });
+});
