@@ -15,6 +15,7 @@ LLFFFLFLFL`;
 
 // Globals
 const robots: Robot[] = [];
+const scents: Set<string> = new Set();
 
 // Process input
 const lines = input.trim().split('\n');
@@ -60,10 +61,19 @@ robots.forEach((robot) => {
       case 'F':
         // Move forward
         const [newX, newY] = goForward(robot.x, robot.y, robot.orientation);
+
+        // If there's a scent, ignore instructions
+        if (scents.has(`${newX},${newY}`)) {
+          break;
+        }
+
         if (isWithinBounds(newX, newY, gridMaxX, gridMaxY)) {
+          // If robot is within bounds, move forward
           robot.x = newX;
           robot.y = newY;
         } else {
+          // If robot is out of bounds, mark its position with a scent & isLost=true
+          scents.add(`${robot.x},${robot.y}`);
           robot.isLost = true;
         }
         break;
