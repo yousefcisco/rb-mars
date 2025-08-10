@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "ts-node index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "keywords": [],
   "author": "",
@@ -18,9 +20,12 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.33.0",
+    "@types/jest": "^30.0.0",
     "eslint": "^9.33.0",
+    "jest": "^30.0.5",
     "jiti": "^2.5.1",
     "prettier": "3.6.2",
+    "ts-jest": "^29.4.1",
     "typescript-eslint": "^8.39.0"
   }
 }
