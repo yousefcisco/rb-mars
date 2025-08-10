@@ -43,19 +43,13 @@ console.log(`Grid size: ${gridMaxX} ${gridMaxY}`);
 console.log(`Initial robot positions:`);
 robots.forEach((robot) =>
   console.log(
-    `Robot at (${robot.x}, ${robot.y}) facing ${robot.orientation} is ${robot.isLost ? 'lost' : 'not lost'}`,
+    `${robot.x} ${robot.y} ${robot.orientation} ${robot.isLost ? 'LOST' : ''}`,
   ),
 );
 
-robots.forEach((robot, index) => {
-  console.log('');
-  console.log('');
-
+robots.forEach((robot) => {
   robot.instruction.forEach((instr) => {
-    console.log(`Robot ${index + 1} executing instruction: ${instr}`);
-
     if (robot.isLost) {
-      console.log(`Robot ${index + 1} is already lost, skipping instruction.`);
       return;
     }
     // Process each instruction
@@ -63,36 +57,25 @@ robots.forEach((robot, index) => {
       case 'L':
         // Turn left
         robot.orientation = turnLeft(robot.orientation);
-        console.log(
-          `Robot at (${robot.x}, ${robot.y}) turned to face ${robot.orientation}`,
-        );
         break;
       case 'R':
         // Turn right
         robot.orientation = turnRight(robot.orientation);
-        console.log(
-          `Robot at (${robot.x}, ${robot.y}) turned to face ${robot.orientation}`,
-        );
         break;
       case 'F':
         // Move forward
         const [newX, newY] = goForward(robot.x, robot.y, robot.orientation);
 
         if (isWithinBounds(newX, newY, gridMaxX, gridMaxY)) {
-          console.log(`Moving robot to (${newX}, ${newY})`);
           // If robot is within bounds, move forward
           robot.x = newX;
           robot.y = newY;
         } else {
-          // If there's a scent, ignore instructions
           if (scents.has(`${robot.x},${robot.y}`)) {
-            console.log(
-              `Scent detected at (${robot.x}, ${robot.y}), ignoring instruction`,
-            );
+            // If there's a scent, ignore instruction
             break;
           } else {
             // If robot is out of bounds, mark its position with a scent & isLost=true
-            console.log(`Robot at (${robot.x}, ${robot.y}) is lost!`);
             scents.add(`${robot.x},${robot.y}`);
             robot.isLost = true;
           }
@@ -106,6 +89,6 @@ console.log('');
 console.log(`Final robot positions:`);
 robots.forEach((robot) =>
   console.log(
-    `Robot at (${robot.x}, ${robot.y}) facing ${robot.orientation} is ${robot.isLost ? 'lost' : 'not lost'}`,
+    `${robot.x} ${robot.y} ${robot.orientation} ${robot.isLost ? 'LOST' : ''}`,
   ),
 );
